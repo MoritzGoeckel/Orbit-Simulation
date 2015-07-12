@@ -4,12 +4,13 @@ var GAME;
 (function (GAME) {
     var Game = (function () {
         function Game(canvas) {
+            this.lastUpdate = 0;
             var engine = new BABYLON.Engine(canvas, true);
             var scene = this.onSetup(engine, canvas);
             var game = this;
             engine.runRenderLoop(function () {
                 var now = game.getTimestamp();
-                if (now >= this.lastUpdate + (1000 / 25)) {
+                if (now >= game.lastUpdate + (1000 / 25)) {
                     game.onUpdate(now - game.lastUpdate);
                     game.lastUpdate = now;
                 }
@@ -41,7 +42,6 @@ var GAME;
             return scene;
         };
         Game.prototype.onUpdate = function (sinceLastUpdate) {
-            console.log(sinceLastUpdate);
         };
         return Game;
     })();

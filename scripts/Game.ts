@@ -12,7 +12,7 @@ module GAME {
 
             engine.runRenderLoop(function () {
                 var now: number = game.getTimestamp();
-                if(now >= this.lastUpdate + (1000 / 25)){
+                if (now >= game.lastUpdate + (1000 / 25)){
                     game.onUpdate(now - game.lastUpdate); 
                     game.lastUpdate = now;
                 }
@@ -24,7 +24,7 @@ module GAME {
             });
         }
 
-        private lastUpdate : number;
+        private lastUpdate : number = 0;
 
         private getTimestamp() : number{
             var date = new Date();
@@ -61,7 +61,7 @@ module GAME {
         }
 
         private onUpdate(sinceLastUpdate : number){
-            console.log(sinceLastUpdate);
+            
         }
     }
 }
