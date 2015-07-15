@@ -3,6 +3,15 @@
 
 module GAME {
     export class Game {
+        
+        private lastUpdate :number = 0;
+        private running :boolean = true;
+        private sphere_1 :ORBIT_SPHERE.Sphere;
+        private sphere_2 :ORBIT_SPHERE.Sphere;
+        
+        private camera :BABYLON.FreeCamera;
+        private frameID :number = 0;
+        
         constructor(canvas :HTMLCanvasElement) {
             var engine = new BABYLON.Engine(canvas, true);
             var scene = this.onSetup(engine, canvas);
@@ -24,18 +33,11 @@ module GAME {
                 engine.resize();
             });
         }
-
-        private lastUpdate :number = 0;
-
+        
         private getTimestamp() : number{
             var date = new Date();
             return date.getTime();
         }
-
-        private sphere_1: ORBIT_SPHERE.Sphere;
-        private sphere_2: ORBIT_SPHERE.Sphere;
-        
-        private camera :BABYLON.FreeCamera;
         
         private onSetup(engine:BABYLON.Engine, canvas:HTMLCanvasElement):BABYLON.Scene {  
             var scene = new BABYLON.Scene(engine);
@@ -64,14 +66,23 @@ module GAME {
         }
 
         private onUpdate(sinceLastUpdate : number){
-            this.sphere_1.interactGravity(this.sphere_2);
-            this.sphere_2.interactGravity(this.sphere_1);
-            
-            this.sphere_1.update(sinceLastUpdate);
-            this.sphere_2.update(sinceLastUpdate);
-            
-            //Stick Camera to sphere_1
-            //this.camera.setTarget(this.sphere_1.getPosition());
+            if(game.running){
+                this.sphere_1.interactGravity(this.sphere_2);
+                this.sphere_2.interactGravity(this.sphere_1);
+                
+                this.sphere_1.update(sinceLastUpdate);
+                this.sphere_2.update(sinceLastUpdate);
+                
+                if(this.frameID != 0 && this.sphere_1.isColliding(this.sphere_2)){
+                    console.log("Collision!" + this.frameID);
+                    this.running = false;
+                }
+                    
+                //Stick Camera to sphere_1
+                //this.camera.setTarget(this.sphere_1.getPosition());
+                
+                this.frameID++;
+            }
         }
     }
 }

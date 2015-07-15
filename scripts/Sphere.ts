@@ -15,7 +15,11 @@ module ORBIT_SPHERE {
             this.mesh = BABYLON.Mesh.CreateSphere("sphere", 16, this.mass / 2, scene);
             this.setPosition(position);
         }
-
+        
+        public isColliding(other :Sphere) :boolean{
+            return other.mesh.intersectsMesh(this.mesh);
+        }
+        
         public getMass() :number{
             return this.mass;
         }

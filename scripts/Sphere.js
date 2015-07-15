@@ -9,6 +9,9 @@ var ORBIT_SPHERE;
             this.mesh = BABYLON.Mesh.CreateSphere("sphere", 16, this.mass / 2, scene);
             this.setPosition(position);
         }
+        Sphere.prototype.isColliding = function (other) {
+            return other.mesh.intersectsMesh(this.mesh);
+        };
         Sphere.prototype.getMass = function () {
             return this.mass;
         };
