@@ -3,4 +3,3 @@
 console.log("Starte script!");
 var canvas = document.getElementById("thecanvas");
 var game = new GAME.Game(canvas);
-//# sourceMappingURL=Main.js.map

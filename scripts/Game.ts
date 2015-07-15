@@ -34,8 +34,7 @@ module GAME {
         private sphere_1: ORBIT_SPHERE.Sphere;
         private sphere_2: ORBIT_SPHERE.Sphere;
 
-        private onSetup(engine:BABYLON.Engine, canvas:HTMLCanvasElement):BABYLON.Scene {
-
+        private onSetup(engine:BABYLON.Engine, canvas:HTMLCanvasElement):BABYLON.Scene {  
             var scene = new BABYLON.Scene(engine);
 
             // This creates and positions a free camera (non-mesh)
@@ -56,7 +55,7 @@ module GAME {
             this.sphere_1 = new ORBIT_SPHERE.Sphere(1, scene);
             this.sphere_2 = new ORBIT_SPHERE.Sphere(3, scene);
             this.sphere_2.setPosition(new BABYLON.Vector3(0, 0, 10));
-
+            
             return scene;
         }
 
