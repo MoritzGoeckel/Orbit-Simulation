@@ -39,8 +39,9 @@ var GAME;
             this.camera.attachControl(canvas, true);
             // This creates a light, aiming 0,1,0 - to the sky (non-mesh)
             var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
-            // Default intensity is 1. Let's dim the light a small amount
+            // Default intensity is 1.
             light.intensity = 0.7;
+            //Create the spheres
             this.sphere_1 = new ORBIT_SPHERE.Sphere(6, new BABYLON.Vector3(0, 0, 0), scene);
             this.sphere_2 = new ORBIT_SPHERE.Sphere(2, new BABYLON.Vector3(10, 10, 0), scene);
             this.sphere_2.setVelocity(new BABYLON.Vector3(0.5, -0.5, 0));
@@ -48,10 +49,13 @@ var GAME;
         };
         Game.prototype.onUpdate = function (sinceLastUpdate) {
             if (game.running) {
+                //Iterate throught spheres and interactGravity everything with everything (Do the collision here?)
                 this.sphere_1.interactGravity(this.sphere_2);
                 this.sphere_2.interactGravity(this.sphere_1);
+                //Update every sphere
                 this.sphere_1.update(sinceLastUpdate);
                 this.sphere_2.update(sinceLastUpdate);
+                //Collide every sphere with every sphere
                 if (this.frameID != 0 && this.sphere_1.isColliding(this.sphere_2)) {
                     console.log("Collision!" + this.frameID);
                     this.running = false;
