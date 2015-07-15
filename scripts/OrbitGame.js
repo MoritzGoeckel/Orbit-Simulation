@@ -12,6 +12,7 @@ var ORBIT_GAME;
         __extends(OrbitGame, _super);
         function OrbitGame() {
             _super.apply(this, arguments);
+            this.isGravityCalculationRunning = false;
         }
         OrbitGame.prototype.onSetup = function (engine, canvas) {
             var scene = new BABYLON.Scene(engine);
@@ -30,33 +31,21 @@ var ORBIT_GAME;
             this.planets = new Array();
             this.planets.push(new ORBIT_SPHERE.Sphere(6, new BABYLON.Vector3(0, 0, 0), new BABYLON.Vector3(0, 0, 0), scene));
             //this.planets[0].setIsFixedPosition(); //No gravitational force is effecting this guy :)
-            this.planets.push(new ORBIT_SPHERE.Sphere(2, new BABYLON.Vector3(9, 9, 0), new BABYLON.Vector3(0.5, -0.5, 0), scene));
-            this.planets.push(new ORBIT_SPHERE.Sphere(2, new BABYLON.Vector3(-9, -9, 0), new BABYLON.Vector3(-0.5, 0.5, 0), scene));
+            //this.planets.push(new ORBIT_SPHERE.Sphere(2, new BABYLON.Vector3(9, 9, 0), new BABYLON.Vector3(0, 0, 0), scene));            
+            this.planets.push(new ORBIT_SPHERE.Sphere(2, new BABYLON.Vector3(9, 9, 0), new BABYLON.Vector3(0.3, -0.3, 0), scene));
+            this.planets.push(new ORBIT_SPHERE.Sphere(2, new BABYLON.Vector3(-9, -9, 0), new BABYLON.Vector3(-0.3, 0.3, 0), scene));
+            this.calculateGravityLoop(this);
             return scene;
         };
         OrbitGame.prototype.onUpdate = function (sinceLastUpdate) {
-            var _this = this;
             if (this.running) {
-                //Iterate throught spheres and interactGravity everything with everything (Do the collision here?)
-                this.planets.forEach(function (planet) {
-                    _this.planets.forEach(function (other_planet) {
-                        if (planet != other_planet) {
-                            //Calculate the new velocity
-                            planet.interactGravity(other_planet);
-                            //Collide every sphere with every sphere
-                            if (_this.frameID != 0 && planet.isColliding(other_planet)) {
-                                console.log("Collision!" + _this.frameID);
-                                (planet.getMass() < other_planet.getMass() ? planet : other_planet).setDestroyed();
-                            }
-                        }
-                    });
-                });
                 //Update every sphere and remove the destroyed ones
                 for (var i = 0; i < this.planets.length; i++) {
                     if (this.planets[i].isDestroyed()) {
                         console.log("Removing planet");
-                        this.planets.splice(i);
+                        this.planets.splice(i, 1);
                         i--;
+                        console.log(i);
                     }
                     else
                         this.planets[i].update(sinceLastUpdate);
@@ -64,6 +53,30 @@ var ORBIT_GAME;
                 //Stick Camera to sphere_1
                 //this.camera.setTarget(this.sphere_1.getPosition());
                 this.frameID++;
+            }
+        };
+        OrbitGame.prototype.calculateGravityLoop = function (game) {
+            setTimeout(function () { game.calculateGravityLoop(game); }, 100);
+            if (game.isGravityCalculationRunning == false) {
+                game.isGravityCalculationRunning = true;
+                //Iterate throught spheres and interactGravity everything with everything (Do the collision here?)
+                game.planets.forEach(function (planet) {
+                    game.planets.forEach(function (other_planet) {
+                        if (planet != other_planet) {
+                            //Calculate the new velocity
+                            planet.interactGravity(other_planet);
+                            //Collide every sphere with every sphere
+                            if (game.frameID != 0 && planet.isColliding(other_planet)) {
+                                console.log("Collision!" + game.frameID);
+                                (planet.getMass() < other_planet.getMass() ? planet : other_planet).setDestroyed();
+                            }
+                        }
+                    });
+                });
+                game.isGravityCalculationRunning = false;
+            }
+            else {
+                console.log("Skipped a frame! Too much load?");
             }
         };
         return OrbitGame;

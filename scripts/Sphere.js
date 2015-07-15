@@ -19,6 +19,7 @@ var ORBIT_SPHERE;
         };
         Sphere.prototype.setDestroyed = function () {
             this.destroyed = true;
+            this.mesh.getScene().removeMesh(this.mesh); //Todo: more to dispose?
         };
         Sphere.prototype.isColliding = function (other) {
             //Do my own collision algorythm? Maybe faster and more percise...

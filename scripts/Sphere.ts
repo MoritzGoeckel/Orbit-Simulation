@@ -30,6 +30,7 @@ module ORBIT_SPHERE {
         
         public setDestroyed() :void{
             this.destroyed = true;
+            this.mesh.getScene().removeMesh(this.mesh); //Todo: more to dispose?
         }
         
         public isColliding(other :Sphere) :boolean{
