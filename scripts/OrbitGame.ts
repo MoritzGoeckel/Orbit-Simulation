@@ -2,9 +2,11 @@
 ///<reference path="Game.ts"/>
 
 module ORBIT_GAME {
-    export class OrbitGame extends GAME.Game {  
-        protected onSetup(engine:BABYLON.Engine, canvas:HTMLCanvasElement):BABYLON.Scene {  
-            var scene = new BABYLON.Scene(engine);
+    export class OrbitGame extends GAME.Game {
+
+        private planets: Array<ORBIT_SPHERE.Sphere>;
+
+        protected onSetup(engine:BABYLON.Engine, canvas :HTMLCanvasElement, scene :BABYLON.Scene):BABYLON.Scene {  
             scene.clearColor = new BABYLON.Color3(1, 1, 1);
             
             // This creates and positions a free camera (non-mesh)
@@ -52,15 +54,13 @@ module ORBIT_GAME {
                 }
                     
                 //Stick Camera to sphere_1
-                //this.camera.setTarget(this.sphere_1.getPosition());
-                
-                this.frameID++;
+                //this.camera.setTarget(this.sphere_1.getPosition());   
             }
         }
         
         private isGravityCalculationRunning :boolean = false;
         private calculateGravityLoop(game : OrbitGame) : void{
-            setTimeout(function(){ game.calculateGravityLoop(game); }, 1000 / 30);
+            setTimeout(function(){ game.calculateGravityLoop(game); }, 1000 / 10);
             
             if(game.isGravityCalculationRunning == false){
                 game.isGravityCalculationRunning = true;

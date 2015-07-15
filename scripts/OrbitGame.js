@@ -14,8 +14,7 @@ var ORBIT_GAME;
             _super.apply(this, arguments);
             this.isGravityCalculationRunning = false;
         }
-        OrbitGame.prototype.onSetup = function (engine, canvas) {
-            var scene = new BABYLON.Scene(engine);
+        OrbitGame.prototype.onSetup = function (engine, canvas, scene) {
             scene.clearColor = new BABYLON.Color3(1, 1, 1);
             // This creates and positions a free camera (non-mesh)
             this.camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 0, 30), scene);
@@ -51,13 +50,10 @@ var ORBIT_GAME;
                     else
                         this.planets[i].update(sinceLastUpdate);
                 }
-                //Stick Camera to sphere_1
-                //this.camera.setTarget(this.sphere_1.getPosition());
-                this.frameID++;
             }
         };
         OrbitGame.prototype.calculateGravityLoop = function (game) {
-            setTimeout(function () { game.calculateGravityLoop(game); }, 1000 / 30);
+            setTimeout(function () { game.calculateGravityLoop(game); }, 1000 / 10);
             if (game.isGravityCalculationRunning == false) {
                 game.isGravityCalculationRunning = true;
                 //Iterate throught spheres and interactGravity everything with everything (Do the collision here?)

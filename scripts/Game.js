@@ -8,7 +8,8 @@ var GAME;
             this.running = true;
             this.frameID = 0;
             var engine = new BABYLON.Engine(canvas, true);
-            var scene = this.onSetup(engine, canvas);
+            var scene = new BABYLON.Scene(engine);
+            this.onSetup(engine, canvas, scene);
             var game = this;
             engine.runRenderLoop(function () {
                 var now = game.getTimestamp();
@@ -16,6 +17,7 @@ var GAME;
                     if (game.lastUpdate == 0)
                         game.lastUpdate = game.getTimestamp() - 30;
                     game.onUpdate(now - game.lastUpdate);
+                    game.frameID++;
                     game.lastUpdate = now;
                 }
                 scene.render();
@@ -28,7 +30,7 @@ var GAME;
             var date = new Date();
             return date.getTime();
         };
-        Game.prototype.onSetup = function (engine, canvas) {
+        Game.prototype.onSetup = function (engine, canvas, scene) {
             throw new Error('onSetup is abstract');
         };
         Game.prototype.onUpdate = function (sinceLastUpdate) {

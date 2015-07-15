@@ -10,11 +10,10 @@ module GAME {
         protected camera :BABYLON.FreeCamera;
         protected frameID :number = 0;
         
-        protected planets :Array<ORBIT_SPHERE.Sphere>;
-        
         constructor(canvas :HTMLCanvasElement) {
             var engine = new BABYLON.Engine(canvas, true);
-            var scene = this.onSetup(engine, canvas);
+            var scene = new BABYLON.Scene(engine);
+            this.onSetup(engine, canvas, scene);
             var game :GAME.Game = this;
 
             engine.runRenderLoop(function () {
@@ -23,7 +22,8 @@ module GAME {
                     if(game.lastUpdate == 0)
                         game.lastUpdate = game.getTimestamp() - 30;
                     
-                    game.onUpdate(now - game.lastUpdate); 
+                    game.onUpdate(now - game.lastUpdate);
+                    game.frameID++;
                     game.lastUpdate = now;
                 }
                 scene.render();
@@ -39,7 +39,7 @@ module GAME {
             return date.getTime();
         }
         
-        protected onSetup(engine:BABYLON.Engine, canvas:HTMLCanvasElement):BABYLON.Scene{
+        protected onSetup(engine:BABYLON.Engine, canvas:HTMLCanvasElement, scene :BABYLON.Scene):BABYLON.Scene{
             throw new Error('onSetup is abstract');
         }
         
