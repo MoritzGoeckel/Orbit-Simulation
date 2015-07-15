@@ -4,12 +4,16 @@ var ORBIT_SPHERE;
     var Sphere = (function () {
         function Sphere(mass, position, velocity, scene) {
             this.destroyed = false;
+            this.fixedPosition = false;
             this.mass = mass;
             this.setVelocity(velocity);
             // Built-in 'sphere' shape. Params: name, subdivs, size, scene
             this.mesh = BABYLON.Mesh.CreateSphere("sphere", 16, this.mass / 2, scene);
             this.setPosition(position);
         }
+        Sphere.prototype.setIsFixedPosition = function () {
+            this.fixedPosition = true;
+        };
         Sphere.prototype.isDestroyed = function () {
             return this.destroyed;
         };
@@ -52,8 +56,10 @@ var ORBIT_SPHERE;
             return other.getPosition().subtract(this.getPosition()).normalize();
         };
         Sphere.prototype.interactGravity = function (other) {
-            var acceleration = this.getAccelerationDueGravitation(other);
-            this.addVelocity(this.getDirection(other).multiplyByFloats(acceleration, acceleration, acceleration));
+            if (this.fixedPosition == false) {
+                var acceleration = this.getAccelerationDueGravitation(other);
+                this.addVelocity(this.getDirection(other).multiplyByFloats(acceleration, acceleration, acceleration));
+            }
         };
         Sphere.prototype.update = function (deltaTime) {
             var movement = deltaTime / 70;

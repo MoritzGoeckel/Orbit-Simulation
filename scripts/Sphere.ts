@@ -9,6 +9,8 @@ module ORBIT_SPHERE {
         
         private destroyed :boolean = false;
         
+        private fixedPosition :boolean = false;
+        
         constructor(mass :number, position :BABYLON.Vector3, velocity :BABYLON.Vector3, scene :BABYLON.Scene) {
             this.mass = mass;
             this.setVelocity(velocity);
@@ -16,6 +18,10 @@ module ORBIT_SPHERE {
             // Built-in 'sphere' shape. Params: name, subdivs, size, scene
             this.mesh = BABYLON.Mesh.CreateSphere("sphere", 16, this.mass / 2, scene);
             this.setPosition(position);
+        }
+        
+        public setIsFixedPosition(){
+            this.fixedPosition = true;
         }
         
         public isDestroyed() :boolean{
@@ -72,9 +78,11 @@ module ORBIT_SPHERE {
             return other.getPosition().subtract(this.getPosition()).normalize();
         }
 
-        public interactGravity(other :Sphere) :void{            
-            var acceleration :number = this.getAccelerationDueGravitation(other);
-            this.addVelocity(this.getDirection(other).multiplyByFloats(acceleration, acceleration, acceleration));
+        public interactGravity(other :Sphere) :void{
+            if(this.fixedPosition == false){
+                var acceleration :number = this.getAccelerationDueGravitation(other);
+                this.addVelocity(this.getDirection(other).multiplyByFloats(acceleration, acceleration, acceleration));
+            }
         }
         
         public update(deltaTime :number) :void{

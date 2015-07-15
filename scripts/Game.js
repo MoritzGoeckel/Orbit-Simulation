@@ -44,7 +44,9 @@ var GAME;
             //Create the spheres
             this.planets = new Array();
             this.planets.push(new ORBIT_SPHERE.Sphere(6, new BABYLON.Vector3(0, 0, 0), new BABYLON.Vector3(0, 0, 0), scene));
-            this.planets.push(new ORBIT_SPHERE.Sphere(2, new BABYLON.Vector3(10, 10, 0), new BABYLON.Vector3(0.5, -0.5, 0), scene));
+            //this.planets[0].setIsFixedPosition(); //No gravitational force is effecting this guy :)
+            this.planets.push(new ORBIT_SPHERE.Sphere(2, new BABYLON.Vector3(9, 9, 0), new BABYLON.Vector3(0.5, -0.5, 0), scene));
+            this.planets.push(new ORBIT_SPHERE.Sphere(2, new BABYLON.Vector3(-9, -9, 0), new BABYLON.Vector3(-0.5, 0.5, 0), scene));
             return scene;
         };
         Game.prototype.onUpdate = function (sinceLastUpdate) {
