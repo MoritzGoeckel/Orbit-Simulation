@@ -57,7 +57,7 @@ var ORBIT_GAME;
             }
         };
         OrbitGame.prototype.calculateGravityLoop = function (game) {
-            setTimeout(function () { game.calculateGravityLoop(game); }, 100);
+            setTimeout(function () { game.calculateGravityLoop(game); }, 1000 / 30);
             if (game.isGravityCalculationRunning == false) {
                 game.isGravityCalculationRunning = true;
                 //Iterate throught spheres and interactGravity everything with everything (Do the collision here?)
@@ -84,3 +84,4 @@ var ORBIT_GAME;
     })(GAME.Game);
     ORBIT_GAME.OrbitGame = OrbitGame;
 })(ORBIT_GAME || (ORBIT_GAME = {}));
+//# sourceMappingURL=OrbitGame.js.map

@@ -3,3 +3,9 @@ C:\Users\Moritz\Desktop\TypeScript-BabylonJS-Orbit\TypeScript-BabylonJS-Orbit\bi
 C:\Users\Moritz\Desktop\TypeScript-BabylonJS-Orbit\TypeScript-BabylonJS-Orbit\bin\TypeScript-BabylonJS-Orbit.pdb
 C:\Users\Moritz\Desktop\TypeScript-BabylonJS-Orbit\TypeScript-BabylonJS-Orbit\obj\Debug\TypeScript-BabylonJS-Orbit.dll
 C:\Users\Moritz\Desktop\TypeScript-BabylonJS-Orbit\TypeScript-BabylonJS-Orbit\obj\Debug\TypeScript-BabylonJS-Orbit.pdb
+C:\Users\Moritz\Documents\GitHub\Orbit-Simulation\bin\TypeScript-BabylonJS-Orbit.dll.config
+C:\Users\Moritz\Documents\GitHub\Orbit-Simulation\bin\TypeScript-BabylonJS-Orbit.dll
+C:\Users\Moritz\Documents\GitHub\Orbit-Simulation\bin\TypeScript-BabylonJS-Orbit.pdb
+C:\Users\Moritz\Documents\GitHub\Orbit-Simulation\obj\Debug\TypeScript-BabylonJS-Orbit.csprojResolveAssemblyReference.cache
+C:\Users\Moritz\Documents\GitHub\Orbit-Simulation\obj\Debug\TypeScript-BabylonJS-Orbit.dll
+C:\Users\Moritz\Documents\GitHub\Orbit-Simulation\obj\Debug\TypeScript-BabylonJS-Orbit.pdb

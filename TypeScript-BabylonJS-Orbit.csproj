@@ -26,6 +26,7 @@
     <TypeScriptCompile Include="babylon.2.1.d.ts" />
     <TypeScriptCompile Include="scripts\Game.ts" />
     <TypeScriptCompile Include="scripts\Main.ts" />
+    <TypeScriptCompile Include="scripts\OrbitGame.ts" />
     <TypeScriptCompile Include="scripts\Sphere.ts" />
   </ItemGroup>
   <ItemGroup>

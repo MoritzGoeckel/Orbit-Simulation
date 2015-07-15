@@ -60,7 +60,7 @@ module ORBIT_GAME {
         
         private isGravityCalculationRunning :boolean = false;
         private calculateGravityLoop(game : OrbitGame) : void{
-            setTimeout(function(){ game.calculateGravityLoop(game); }, 100);
+            setTimeout(function(){ game.calculateGravityLoop(game); }, 1000 / 30);
             
             if(game.isGravityCalculationRunning == false){
                 game.isGravityCalculationRunning = true;

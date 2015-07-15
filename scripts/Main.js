@@ -4,3 +4,4 @@
 console.log("Starte script!");
 var canvas = document.getElementById("thecanvas");
 var game = new ORBIT_GAME.OrbitGame(canvas);
+//# sourceMappingURL=Main.js.map

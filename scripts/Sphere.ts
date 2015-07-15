@@ -34,7 +34,7 @@ module ORBIT_SPHERE {
         }
         
         public isColliding(other :Sphere) :boolean{
-            //Do my own collision algorythm? Maybe faster and more percise...
+            //Do my own collision algorithm? Maybe faster and more percise...
             return other.mesh.intersectsMesh(this.mesh); //But for now I use the stock algo
         }
         

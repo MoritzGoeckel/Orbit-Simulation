@@ -22,7 +22,7 @@ var ORBIT_SPHERE;
             this.mesh.getScene().removeMesh(this.mesh); //Todo: more to dispose?
         };
         Sphere.prototype.isColliding = function (other) {
-            //Do my own collision algorythm? Maybe faster and more percise...
+            //Do my own collision algorithm? Maybe faster and more percise...
             return other.mesh.intersectsMesh(this.mesh); //But for now I use the stock algo
         };
         Sphere.prototype.getMass = function () {
@@ -70,3 +70,4 @@ var ORBIT_SPHERE;
     })();
     ORBIT_SPHERE.Sphere = Sphere;
 })(ORBIT_SPHERE || (ORBIT_SPHERE = {}));
+//# sourceMappingURL=Sphere.js.map
