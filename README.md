@@ -1,5 +1,5 @@
-#TypeScript + BabylonJS
-This is an example project for Typescript + BabylonJS in Visual Studio 2013 and Visual Code.
+#Orbit Simulation
+This project is in Typescript + BabylonJS in Visual Studio 2013 and Visual Code.
 
 - [Visual Code](https://code.visualstudio.com/)
 - [Visual Studio 2013](https://www.visualstudio.com/en-us/downloads/download-visual-studio-vs.aspx)

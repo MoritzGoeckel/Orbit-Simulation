@@ -2,20 +2,21 @@
 
 module ORBIT_SPHERE {
     export class Sphere {
-        private mass: number;
-        private velocity: BABYLON.Vector3;
+        private mass :number;
+        private velocity :BABYLON.Vector3;
 
-        private mesh: BABYLON.Mesh;
+        private mesh :BABYLON.Mesh;
 
-        constructor(mass: number, scene :BABYLON.Scene) {
+        constructor(mass :number, position :BABYLON.Vector3, scene :BABYLON.Scene) {
             this.mass = mass;
             this.velocity = new BABYLON.Vector3(0,0,0);
 
             // Our built-in 'sphere' shape. Params: name, subdivs, size, scene
-            this.mesh = BABYLON.Mesh.CreateSphere("sphere", 8 * this.mass, this.mass, scene);
+            this.mesh = BABYLON.Mesh.CreateSphere("sphere", 16, this.mass / 2, scene);
+            this.setPosition(position);
         }
 
-        public getMass() : number{
+        public getMass() :number{
             return this.mass;
         }
 
@@ -23,39 +24,47 @@ module ORBIT_SPHERE {
             return this.velocity;
         }
 
-        public setVelocity(value:BABYLON.Vector3) {
+        public setVelocity(value :BABYLON.Vector3) :void{
             this.velocity = value;
         }
 
-        public addVelocity(value: BABYLON.Vector3){
+        public addVelocity(value :BABYLON.Vector3) :void{
             this.velocity = this.velocity.add(value);
         }
 
         public getPosition():BABYLON.Vector3 {
-            return  this.mesh.position;
+            return this.mesh.position;
+        }
+        
+        public addPosition(value :BABYLON.Vector3) :void{
+            this.mesh.position = this.mesh.position.add(value);
         }
 
-        public setPosition(value:BABYLON.Vector3) {
+        public setPosition(value :BABYLON.Vector3) :void{
             this.mesh.position.x = value.x;
             this.mesh.position.y = value.y;
             this.mesh.position.z = value.z;
-
         }
 
-        private getGravitation(other: Sphere) : number{
-            var distance: number = (other.getPosition().subtract(this.getPosition())).length();
-            var gravity:number = other.getMass() / (distance * distance);
-
+        public getAccelerationDueGravitation(other :Sphere) :number{
+            var distance :number = (other.getPosition().subtract(this.getPosition())).length();
+            var gravity :number = other.getMass() / (distance * distance);
+            
             return gravity;
         }
 
-        private getDirection(other: Sphere) : BABYLON.Vector3{
-            return this.getPosition().subtract(other.getPosition()).normalize();
+        private getDirection(other :Sphere) : BABYLON.Vector3{
+            return other.getPosition().subtract(this.getPosition()).normalize();
         }
 
-        public interact(other: Sphere){
-            var g : number = this.getGravitation(other);
-            this.addVelocity(this.getDirection(other).multiplyByFloats(g, g, g));
+        public interactGravity(other :Sphere) :void{
+            var acceleration :number = this.getAccelerationDueGravitation(other);
+            this.addVelocity(this.getDirection(other).multiplyByFloats(acceleration, acceleration, acceleration));
+        }
+        
+        public update(deltaTime :number) :void{
+            var movement :number = deltaTime / 70;
+            this.addPosition(this.getVelocity().multiplyByFloats(movement, movement, movement));
         }
     }
 }

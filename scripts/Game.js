@@ -10,7 +10,9 @@ var GAME;
             var game = this;
             engine.runRenderLoop(function () {
                 var now = game.getTimestamp();
-                if (now >= game.lastUpdate + (1000 / 25)) {
+                if (now >= game.lastUpdate + (1000 / 50)) {
+                    if (game.lastUpdate == 0)
+                        game.lastUpdate = game.getTimestamp() - 30;
                     game.onUpdate(now - game.lastUpdate);
                     game.lastUpdate = now;
                 }
@@ -27,7 +29,7 @@ var GAME;
         Game.prototype.onSetup = function (engine, canvas) {
             var scene = new BABYLON.Scene(engine);
             // This creates and positions a free camera (non-mesh)
-            var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 5, -10), scene);
+            var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 0, 30), scene);
             // This targets the camera to scene origin
             camera.setTarget(BABYLON.Vector3.Zero());
             // This attaches the camera to the canvas
@@ -36,12 +38,16 @@ var GAME;
             var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
             // Default intensity is 1. Let's dim the light a small amount
             light.intensity = 0.7;
-            this.sphere_1 = new ORBIT_SPHERE.Sphere(1, scene);
-            this.sphere_2 = new ORBIT_SPHERE.Sphere(3, scene);
-            this.sphere_2.setPosition(new BABYLON.Vector3(0, 0, 10));
+            this.sphere_1 = new ORBIT_SPHERE.Sphere(6, new BABYLON.Vector3(0, 0, 0), scene);
+            this.sphere_2 = new ORBIT_SPHERE.Sphere(2, new BABYLON.Vector3(10, 10, 0), scene);
+            this.sphere_2.setVelocity(new BABYLON.Vector3(0.5, -0.5, 0));
             return scene;
         };
         Game.prototype.onUpdate = function (sinceLastUpdate) {
+            this.sphere_1.interactGravity(this.sphere_2);
+            this.sphere_2.interactGravity(this.sphere_1);
+            this.sphere_1.update(sinceLastUpdate);
+            this.sphere_2.update(sinceLastUpdate);
         };
         return Game;
     })();
