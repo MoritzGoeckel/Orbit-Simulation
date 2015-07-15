@@ -25,6 +25,6 @@ Tasks: Run Build Task
 
 ##Build in Visual Studio
 ```
-F5
+F5 on the index.html
 ```
 
