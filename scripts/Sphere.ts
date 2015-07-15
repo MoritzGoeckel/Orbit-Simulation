@@ -11,13 +11,14 @@ module ORBIT_SPHERE {
             this.mass = mass;
             this.velocity = new BABYLON.Vector3(0,0,0);
 
-            // Our built-in 'sphere' shape. Params: name, subdivs, size, scene
+            // Built-in 'sphere' shape. Params: name, subdivs, size, scene
             this.mesh = BABYLON.Mesh.CreateSphere("sphere", 16, this.mass / 2, scene);
             this.setPosition(position);
         }
         
         public isColliding(other :Sphere) :boolean{
-            return other.mesh.intersectsMesh(this.mesh);
+            //Do my own collision algorythm? Maybe faster and more percise...
+            return other.mesh.intersectsMesh(this.mesh); //But for now I use the stock algo
         }
         
         public getMass() :number{
