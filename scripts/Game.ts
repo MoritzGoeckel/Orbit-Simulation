@@ -6,11 +6,11 @@ module GAME {
         
         private lastUpdate :number = 0;
         private running :boolean = true;
-        private sphere_1 :ORBIT_SPHERE.Sphere;
-        private sphere_2 :ORBIT_SPHERE.Sphere;
         
         private camera :BABYLON.FreeCamera;
         private frameID :number = 0;
+        
+        private planets :Array<ORBIT_SPHERE.Sphere>;
         
         constructor(canvas :HTMLCanvasElement) {
             var engine = new BABYLON.Engine(canvas, true);
@@ -59,9 +59,9 @@ module GAME {
             light.intensity = 0.7;
 
             //Create the spheres
-            this.sphere_1 = new ORBIT_SPHERE.Sphere(6, new BABYLON.Vector3(0,0,0), scene);
-            this.sphere_2 = new ORBIT_SPHERE.Sphere(2, new BABYLON.Vector3(10, 10, 0), scene);
-            this.sphere_2.setVelocity(new BABYLON.Vector3(0.5, -0.5, 0));
+            this.planets = new Array<ORBIT_SPHERE.Sphere>();
+            this.planets.push(new ORBIT_SPHERE.Sphere(6, new BABYLON.Vector3(0,0,0), new BABYLON.Vector3(0,0,0), scene));
+            this.planets.push(new ORBIT_SPHERE.Sphere(2, new BABYLON.Vector3(10, 10, 0), new BABYLON.Vector3(0.5, -0.5, 0), scene));
             
             return scene;
         }
@@ -70,17 +70,30 @@ module GAME {
             if(game.running){
                 
                 //Iterate throught spheres and interactGravity everything with everything (Do the collision here?)
-                this.sphere_1.interactGravity(this.sphere_2);
-                this.sphere_2.interactGravity(this.sphere_1);
+                this.planets.forEach(planet => {
+                    this.planets.forEach(other_planet => {
+                        if(planet != other_planet){
+                            //Calculate the new velocity
+                            planet.interactGravity(other_planet);
+                            
+                            //Collide every sphere with every sphere
+                            if(this.frameID != 0 && planet.isColliding(other_planet)){
+                                console.log("Collision!" + this.frameID);
+                                (planet.getMass() < other_planet.getMass() ? planet : other_planet).setDestroyed();
+                            }
+                        }
+                    });
+                });
                 
-                //Update every sphere
-                this.sphere_1.update(sinceLastUpdate);
-                this.sphere_2.update(sinceLastUpdate);
-                
-                //Collide every sphere with every sphere
-                if(this.frameID != 0 && this.sphere_1.isColliding(this.sphere_2)){
-                    console.log("Collision!" + this.frameID);
-                    this.running = false;
+                //Update every sphere and remove the destroyed ones
+                for (var i = 0; i < this.planets.length; i++) {
+                    if(this.planets[i].isDestroyed()){
+                        console.log("Removing planet")
+                        this.planets.splice(i);
+                        i--;
+                    }
+                    else
+                        this.planets[i].update(sinceLastUpdate);
                 }
                     
                 //Stick Camera to sphere_1

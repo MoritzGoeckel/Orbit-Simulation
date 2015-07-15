@@ -6,14 +6,24 @@ module ORBIT_SPHERE {
         private velocity :BABYLON.Vector3;
 
         private mesh :BABYLON.Mesh;
-
-        constructor(mass :number, position :BABYLON.Vector3, scene :BABYLON.Scene) {
+        
+        private destroyed :boolean = false;
+        
+        constructor(mass :number, position :BABYLON.Vector3, velocity :BABYLON.Vector3, scene :BABYLON.Scene) {
             this.mass = mass;
-            this.velocity = new BABYLON.Vector3(0,0,0);
+            this.setVelocity(velocity);
 
             // Built-in 'sphere' shape. Params: name, subdivs, size, scene
             this.mesh = BABYLON.Mesh.CreateSphere("sphere", 16, this.mass / 2, scene);
             this.setPosition(position);
+        }
+        
+        public isDestroyed() :boolean{
+            return this.destroyed;
+        }
+        
+        public setDestroyed() :void{
+            this.destroyed = true;
         }
         
         public isColliding(other :Sphere) :boolean{
@@ -62,7 +72,7 @@ module ORBIT_SPHERE {
             return other.getPosition().subtract(this.getPosition()).normalize();
         }
 
-        public interactGravity(other :Sphere) :void{
+        public interactGravity(other :Sphere) :void{            
             var acceleration :number = this.getAccelerationDueGravitation(other);
             this.addVelocity(this.getDirection(other).multiplyByFloats(acceleration, acceleration, acceleration));
         }

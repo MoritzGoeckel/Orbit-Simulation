@@ -2,13 +2,20 @@
 var ORBIT_SPHERE;
 (function (ORBIT_SPHERE) {
     var Sphere = (function () {
-        function Sphere(mass, position, scene) {
+        function Sphere(mass, position, velocity, scene) {
+            this.destroyed = false;
             this.mass = mass;
-            this.velocity = new BABYLON.Vector3(0, 0, 0);
+            this.setVelocity(velocity);
             // Built-in 'sphere' shape. Params: name, subdivs, size, scene
             this.mesh = BABYLON.Mesh.CreateSphere("sphere", 16, this.mass / 2, scene);
             this.setPosition(position);
         }
+        Sphere.prototype.isDestroyed = function () {
+            return this.destroyed;
+        };
+        Sphere.prototype.setDestroyed = function () {
+            this.destroyed = true;
+        };
         Sphere.prototype.isColliding = function (other) {
             //Do my own collision algorythm? Maybe faster and more percise...
             return other.mesh.intersectsMesh(this.mesh); //But for now I use the stock algo

@@ -42,23 +42,37 @@ var GAME;
             // Default intensity is 1.
             light.intensity = 0.7;
             //Create the spheres
-            this.sphere_1 = new ORBIT_SPHERE.Sphere(6, new BABYLON.Vector3(0, 0, 0), scene);
-            this.sphere_2 = new ORBIT_SPHERE.Sphere(2, new BABYLON.Vector3(10, 10, 0), scene);
-            this.sphere_2.setVelocity(new BABYLON.Vector3(0.5, -0.5, 0));
+            this.planets = new Array();
+            this.planets.push(new ORBIT_SPHERE.Sphere(6, new BABYLON.Vector3(0, 0, 0), new BABYLON.Vector3(0, 0, 0), scene));
+            this.planets.push(new ORBIT_SPHERE.Sphere(2, new BABYLON.Vector3(10, 10, 0), new BABYLON.Vector3(0.5, -0.5, 0), scene));
             return scene;
         };
         Game.prototype.onUpdate = function (sinceLastUpdate) {
+            var _this = this;
             if (game.running) {
                 //Iterate throught spheres and interactGravity everything with everything (Do the collision here?)
-                this.sphere_1.interactGravity(this.sphere_2);
-                this.sphere_2.interactGravity(this.sphere_1);
-                //Update every sphere
-                this.sphere_1.update(sinceLastUpdate);
-                this.sphere_2.update(sinceLastUpdate);
-                //Collide every sphere with every sphere
-                if (this.frameID != 0 && this.sphere_1.isColliding(this.sphere_2)) {
-                    console.log("Collision!" + this.frameID);
-                    this.running = false;
+                this.planets.forEach(function (planet) {
+                    _this.planets.forEach(function (other_planet) {
+                        if (planet != other_planet) {
+                            //Calculate the new velocity
+                            planet.interactGravity(other_planet);
+                            //Collide every sphere with every sphere
+                            if (_this.frameID != 0 && planet.isColliding(other_planet)) {
+                                console.log("Collision!" + _this.frameID);
+                                (planet.getMass() < other_planet.getMass() ? planet : other_planet).setDestroyed();
+                            }
+                        }
+                    });
+                });
+                //Update every sphere and remove the destroyed ones
+                for (var i = 0; i < this.planets.length; i++) {
+                    if (this.planets[i].isDestroyed()) {
+                        console.log("Removing planet");
+                        this.planets.splice(i);
+                        i--;
+                    }
+                    else
+                        this.planets[i].update(sinceLastUpdate);
                 }
                 //Stick Camera to sphere_1
                 //this.camera.setTarget(this.sphere_1.getPosition());

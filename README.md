@@ -1,5 +1,8 @@
 #Orbit Simulation
-This project is in Typescript + BabylonJS in Visual Studio 2013 and Visual Code.
+This is a gravity simulation. You can create a universe with planets, that will effect each other and form orbits if the circumstances are right.
+
+##IDEs and Libraries
+This project is in made with Typescript and BabylonJS. It is developed in Visual Code on Mac, but is compatible to Visual Studio 2013 and Windows too. So just use what ever you want :)
 
 - [Visual Code](https://code.visualstudio.com/)
 - [Visual Studio 2013](https://www.visualstudio.com/en-us/downloads/download-visual-studio-vs.aspx)
