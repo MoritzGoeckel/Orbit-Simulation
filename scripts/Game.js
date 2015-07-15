@@ -28,12 +28,13 @@ var GAME;
         };
         Game.prototype.onSetup = function (engine, canvas) {
             var scene = new BABYLON.Scene(engine);
+            scene.clearColor = new BABYLON.Color3(1, 1, 1);
             // This creates and positions a free camera (non-mesh)
-            var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 0, 30), scene);
+            this.camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 0, 30), scene);
             // This targets the camera to scene origin
-            camera.setTarget(BABYLON.Vector3.Zero());
+            this.camera.setTarget(BABYLON.Vector3.Zero());
             // This attaches the camera to the canvas
-            camera.attachControl(canvas, true);
+            this.camera.attachControl(canvas, true);
             // This creates a light, aiming 0,1,0 - to the sky (non-mesh)
             var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
             // Default intensity is 1. Let's dim the light a small amount
@@ -48,6 +49,8 @@ var GAME;
             this.sphere_2.interactGravity(this.sphere_1);
             this.sphere_1.update(sinceLastUpdate);
             this.sphere_2.update(sinceLastUpdate);
+            //Stick Camera to sphere_1
+            //this.camera.setTarget(this.sphere_1.getPosition());
         };
         return Game;
     })();
