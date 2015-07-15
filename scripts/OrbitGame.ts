@@ -30,6 +30,7 @@ module ORBIT_GAME {
             //this.planets.push(new ORBIT_SPHERE.Sphere(2, new BABYLON.Vector3(9, 9, 0), new BABYLON.Vector3(0, 0, 0), scene));            
             this.planets.push(new ORBIT_SPHERE.Sphere(2, new BABYLON.Vector3(9, 9, 0), new BABYLON.Vector3(0.3, -0.3, 0), scene));
             this.planets.push(new ORBIT_SPHERE.Sphere(2, new BABYLON.Vector3(-9, -9, 0), new BABYLON.Vector3(-0.3, 0.3, 0), scene));
+            //this.planets.push(new ORBIT_SPHERE.Sphere(2, new BABYLON.Vector3(-15, -15, 0), new BABYLON.Vector3(-0.3, 0.3, 0), scene));
             
             this.calculateGravityLoop(this);
             
