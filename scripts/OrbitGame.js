@@ -35,7 +35,7 @@ var ORBIT_GAME;
             this.planets.push(new ORBIT_SPHERE.Sphere(2, new BABYLON.Vector3(-9, -9, 0), new BABYLON.Vector3(-0.3, 0.3, 0), scene));
             //this.planets.push(new ORBIT_SPHERE.Sphere(2, new BABYLON.Vector3(0, 9, 9), new BABYLON.Vector3(0, 0.3, -0.3), scene));
             //this.planets.push(new ORBIT_SPHERE.Sphere(2, new BABYLON.Vector3(0, -9, -9), new BABYLON.Vector3(0, -0.3, 0.3), scene));
-            this.markerMgr = new DECAYING_GEOMETRY.DecayingGeometryManager(6000, scene);
+            this.markerMgr = new DECAYING_GEOMETRY.DecayingGeometryManager(5000, scene);
             this.calculateGravityLoop(this);
             this.spawnMarkersLoop(this);
             return scene;
@@ -57,7 +57,7 @@ var ORBIT_GAME;
         };
         OrbitGame.prototype.spawnMarkersLoop = function (game) {
             var _this = this;
-            setTimeout(function () { game.spawnMarkersLoop(game); }, 1000 / 20);
+            setTimeout(function () { game.spawnMarkersLoop(game); }, 1000 / 40);
             this.planets.forEach(function (planet) {
                 _this.markerMgr.spawn(planet.getPosition());
             });

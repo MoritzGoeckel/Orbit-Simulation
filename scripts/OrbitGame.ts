@@ -36,7 +36,7 @@ module ORBIT_GAME {
             //this.planets.push(new ORBIT_SPHERE.Sphere(2, new BABYLON.Vector3(0, 9, 9), new BABYLON.Vector3(0, 0.3, -0.3), scene));
             //this.planets.push(new ORBIT_SPHERE.Sphere(2, new BABYLON.Vector3(0, -9, -9), new BABYLON.Vector3(0, -0.3, 0.3), scene));
             
-            this.markerMgr = new DECAYING_GEOMETRY.DecayingGeometryManager(6000, scene);
+            this.markerMgr = new DECAYING_GEOMETRY.DecayingGeometryManager(5000, scene);
             
             this.calculateGravityLoop(this);
             this.spawnMarkersLoop(this);
@@ -64,7 +64,7 @@ module ORBIT_GAME {
         }
         
         private spawnMarkersLoop(game : OrbitGame) : void{
-            setTimeout(function(){ game.spawnMarkersLoop(game); }, 1000 / 20);
+            setTimeout(function(){ game.spawnMarkersLoop(game); }, 1000 / 40);
             this.planets.forEach(planet => {
                 this.markerMgr.spawn(planet.getPosition());
             });
