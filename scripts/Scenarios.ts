@@ -1,7 +1,7 @@
 module SCENARIOS {
     export class Scenarios {
 		public getDefaultSzenario(scene :BABYLON.Scene) :Array<ORBIT_SPHERE.Sphere>{
-			return this.getTwoStar(scene);
+			return this.getTwoStarSymetric(scene);
 		}
         
         public getFourStarSymetric(scene :BABYLON.Scene) :Array<ORBIT_SPHERE.Sphere>{

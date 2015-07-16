@@ -4,7 +4,7 @@ var SCENARIOS;
         function Scenarios() {
         }
         Scenarios.prototype.getDefaultSzenario = function (scene) {
-            return this.getTwoStar(scene);
+            return this.getTwoStarSymetric(scene);
         };
         Scenarios.prototype.getFourStarSymetric = function (scene) {
             var planets = new Array();
