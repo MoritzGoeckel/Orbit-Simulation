@@ -22,7 +22,7 @@ module GAME {
                     if(game.lastUpdate == 0)
                         game.lastUpdate = game.getTimestamp() - 30;
                     
-                    game.onUpdate(now - game.lastUpdate);
+                    game.onUpdate(now - game.lastUpdate, game.frameID);
                     game.frameID++;
                     game.lastUpdate = now;
                 }
@@ -43,7 +43,7 @@ module GAME {
             throw new Error('onSetup is abstract');
         }
         
-        protected onUpdate(sinceLastUpdate : number) :void{
+        protected onUpdate(sinceLastUpdate : number, frameID :number) :void{
             throw new Error('onUpdate is abstract');
         }
     }

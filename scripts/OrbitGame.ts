@@ -39,7 +39,7 @@ module ORBIT_GAME {
             return scene;
         }
 
-        protected onUpdate(sinceLastUpdate : number) :void{
+        protected onUpdate(sinceLastUpdate :number, frameID :number) :void{
             if(this.running){
                 //Update every sphere and remove the destroyed ones
                 for (var i = 0; i < this.planets.length; i++) {
