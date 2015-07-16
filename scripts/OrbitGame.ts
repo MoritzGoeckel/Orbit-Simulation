@@ -1,11 +1,13 @@
 ///<reference path="../babylon.2.1.d.ts"/>
 ///<reference path="Game.ts"/>
+///<reference path="DecayingGeometry.ts"/>
 
 module ORBIT_GAME {
     export class OrbitGame extends GAME.Game {
 
         private planets: Array<ORBIT_SPHERE.Sphere>;
-
+        private markerMgr :DECAYING_GEOMETRY.DecayingGeometryManager;
+        
         protected onSetup(engine:BABYLON.Engine, canvas :HTMLCanvasElement, scene :BABYLON.Scene):BABYLON.Scene {  
             scene.clearColor = new BABYLON.Color3(1, 1, 1);
             
@@ -24,17 +26,20 @@ module ORBIT_GAME {
             // Default intensity is 1.
             light.intensity = 0.7;
 
-            //Create the spheres
+            //Create the planets
             this.planets = new Array<ORBIT_SPHERE.Sphere>();
             this.planets.push(new ORBIT_SPHERE.Sphere(6, new BABYLON.Vector3(0,0,0), new BABYLON.Vector3(0,0,0), scene));
             //this.planets[0].setIsFixedPosition(); //No gravitational force is effecting this guy :)
-            
-            //this.planets.push(new ORBIT_SPHERE.Sphere(2, new BABYLON.Vector3(9, 9, 0), new BABYLON.Vector3(0, 0, 0), scene));            
+                      
             this.planets.push(new ORBIT_SPHERE.Sphere(2, new BABYLON.Vector3(9, 9, 0), new BABYLON.Vector3(0.3, -0.3, 0), scene));
             this.planets.push(new ORBIT_SPHERE.Sphere(2, new BABYLON.Vector3(-9, -9, 0), new BABYLON.Vector3(-0.3, 0.3, 0), scene));
-            //this.planets.push(new ORBIT_SPHERE.Sphere(2, new BABYLON.Vector3(-15, -15, 0), new BABYLON.Vector3(-0.3, 0.3, 0), scene));
+            //this.planets.push(new ORBIT_SPHERE.Sphere(2, new BABYLON.Vector3(0, 9, 9), new BABYLON.Vector3(0, 0.3, -0.3), scene));
+            //this.planets.push(new ORBIT_SPHERE.Sphere(2, new BABYLON.Vector3(0, -9, -9), new BABYLON.Vector3(0, -0.3, 0.3), scene));
+            
+            this.markerMgr = new DECAYING_GEOMETRY.DecayingGeometryManager(6000, scene);
             
             this.calculateGravityLoop(this);
+            this.spawnMarkersLoop(this);
             
             return scene;
         }
@@ -56,6 +61,13 @@ module ORBIT_GAME {
                 //Stick Camera to sphere_1
                 //this.camera.setTarget(this.sphere_1.getPosition());   
             }
+        }
+        
+        private spawnMarkersLoop(game : OrbitGame) : void{
+            setTimeout(function(){ game.spawnMarkersLoop(game); }, 1000 / 20);
+            this.planets.forEach(planet => {
+                this.markerMgr.spawn(planet.getPosition());
+            });
         }
         
         private isGravityCalculationRunning :boolean = false;

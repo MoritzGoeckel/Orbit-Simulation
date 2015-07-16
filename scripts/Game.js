@@ -16,7 +16,7 @@ var GAME;
                 if (now >= game.lastUpdate + (1000 / 50)) {
                     if (game.lastUpdate == 0)
                         game.lastUpdate = game.getTimestamp() - 30;
-                    game.onUpdate(now - game.lastUpdate);
+                    game.onUpdate(now - game.lastUpdate, game.frameID);
                     game.frameID++;
                     game.lastUpdate = now;
                 }
@@ -33,11 +33,10 @@ var GAME;
         Game.prototype.onSetup = function (engine, canvas, scene) {
             throw new Error('onSetup is abstract');
         };
-        Game.prototype.onUpdate = function (sinceLastUpdate) {
+        Game.prototype.onUpdate = function (sinceLastUpdate, frameID) {
             throw new Error('onUpdate is abstract');
         };
         return Game;
     })();
     GAME.Game = Game;
 })(GAME || (GAME = {}));
-//# sourceMappingURL=Game.js.map

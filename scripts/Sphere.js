@@ -70,4 +70,3 @@ var ORBIT_SPHERE;
     })();
     ORBIT_SPHERE.Sphere = Sphere;
 })(ORBIT_SPHERE || (ORBIT_SPHERE = {}));
-//# sourceMappingURL=Sphere.js.map
