@@ -1,6 +1,7 @@
 ///<reference path="../babylon.2.1.d.ts"/>
 ///<reference path="Game.ts"/>
 ///<reference path="DecayingGeometry.ts"/>
+///<reference path="Scenarios.ts"/>
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -28,14 +29,9 @@ var ORBIT_GAME;
             // Default intensity is 1.
             light.intensity = 0.7;
             //Create the planets
-            this.planets = new Array();
-            this.planets.push(new ORBIT_SPHERE.Sphere(6, new BABYLON.Vector3(0, 0, 0), new BABYLON.Vector3(0, 0, 0), scene));
-            //this.planets[0].setIsFixedPosition(); //No gravitational force is effecting this guy :)
-            this.planets.push(new ORBIT_SPHERE.Sphere(2, new BABYLON.Vector3(9, 9, 0), new BABYLON.Vector3(0.3, -0.3, 0), scene));
-            this.planets.push(new ORBIT_SPHERE.Sphere(2, new BABYLON.Vector3(-9, -9, 0), new BABYLON.Vector3(-0.3, 0.3, 0), scene));
-            //this.planets.push(new ORBIT_SPHERE.Sphere(2, new BABYLON.Vector3(0, 9, 9), new BABYLON.Vector3(0, 0.3, -0.3), scene));
-            //this.planets.push(new ORBIT_SPHERE.Sphere(2, new BABYLON.Vector3(0, -9, -9), new BABYLON.Vector3(0, -0.3, 0.3), scene));
-            this.markerMgr = new DECAYING_GEOMETRY.DecayingGeometryManager(5000, scene);
+            var repo = new SCENARIOS.Scenarios();
+            this.planets = repo.getDefaultSzenario(scene);
+            this.markerMgr = new DECAYING_GEOMETRY.DecayingGeometryManager(8000, scene);
             this.calculateGravityLoop(this);
             this.spawnMarkersLoop(this);
             return scene;

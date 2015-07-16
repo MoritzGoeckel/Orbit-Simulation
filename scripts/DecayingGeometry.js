@@ -36,7 +36,7 @@ var DECAYING_GEOMETRY;
             if (elapsedTime >= this.lifeTime)
                 this.setDestroyed();
             else {
-                var quotient = elapsedTime / this.lifeTime;
+                var quotient = Math.pow(elapsedTime / this.lifeTime, 2);
                 quotient = 1 - quotient;
                 this.mesh.material.alpha = quotient;
             }
