@@ -1,13 +1,13 @@
-#Orbit Simulation
+# Orbit Simulation
 This is a gravity simulation. You can create a universe with planets, that will effect each other and form orbits if the circumstances are right.
 
-##Demo
+## Demo
 [To the demo](http://moritzgoeckel.com/prs/Orbit-Simulation/)
 
-##Visualization
+## Visualization
 ![Orbit JS visualization](https://raw.githubusercontent.com/MoritzGoeckel/TypeScript-Orbit-Simulation/master/orbit_example_visualization.gif)
 
-##IDEs and Libraries
+## IDEs and Libraries
 This project is in made with Typescript and BabylonJS. It is developed in Visual Code on Mac, but is compatible to Visual Studio 2013 and Windows too. So just use what ever you want :)
 
 - [Visual Code](https://code.visualstudio.com/)
@@ -15,18 +15,18 @@ This project is in made with Typescript and BabylonJS. It is developed in Visual
 - [Typescript](http://typescriptlang.org)
 - [BabylonJS](http://www.babylonjs.com/)
 
-##Install Typescript on Mac
+## Install Typescript on Mac
 ```
 sudo npm install -g typescript
 ```
 
-##Build in Visual Code
+## Build in Visual Code
 ```
 Tasks: Run Build Task
 (Mac: Shift + CMD + B)
 ```
 
-##Build in Visual Studio
+## Build in Visual Studio
 ```
 F5 on the index.html
 ```
